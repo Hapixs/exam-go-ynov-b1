@@ -3,36 +3,21 @@ package exam
 import "fmt"
 
 func Diamond(index int) {
-	index -= 1
-	for i := 0; i < index; i++ {
-		l := make([]rune, index*2)
-		for indexL := range l {
-			if indexL == index-i || indexL == index+i {
-				l[indexL] = '*'
-			} else {
-				l[indexL] = ' '
-			}
-		}
-		fmt.Println(string(l))
-	}
-	l := make([]rune, index*2+1)
-	for indexL := range l {
-		if indexL == 0 || indexL == len(l)-1 {
-			l[indexL] = '*'
+	for i := 0; i <= index*2; i++ {
+		if i < index {
+			fmt.Println(string(BuildLine(index, index-i, index+i)))
+		} else if i > index {
+			fmt.Println(string(BuildLine(index, i-index, index+(index*2-i))))
 		} else {
-			l[indexL] = ' '
+			fmt.Println(string(BuildLine(index, 0, index*2)))
 		}
 	}
-	fmt.Println(string(l))
-	for i := index - 1; i >= 0; i-- {
-		l := make([]rune, index*2)
-		for indexL := range l {
-			if indexL == index-i || indexL == index+i {
-				l[indexL] = '*'
-			} else {
-				l[indexL] = ' '
-			}
-		}
-		fmt.Println(string(l))
+}
+
+func BuildLine(size, index1, index2 int) []rune {
+	l := make([]rune, size*2+1)
+	for indexL := range l {
+		l[indexL] = map[bool]rune{true: '*', false: ' '}[indexL == index1 || indexL == index2]
 	}
+	return l
 }
